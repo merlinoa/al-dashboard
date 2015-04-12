@@ -1,0 +1,512 @@
+qplot(carat, price, data = diamonds, geom = "point", colour = cut)
+qplot(carat, price, data = diamonds, geom = "point", colour = cut, loess = TRUE)
+?loess
+?lattice
+library(ggplot2)
+qplot(carat, price, data = diamonds, geom = "point", colour = cut)
+p <- p + layer(geom = "smooth")
+p <- ggplot(diamonds, aes(carat, price, colour = cut))
+p <- p + layer(geom = "point")
+p <- p + layer(geom = "smooth")
+p
+p <- ggplot(mtcars)
+summary(p)
+summary(p)
+p <- p + aes(wt, hp)
+summary(p)
+p
+p <- p + geom_point()
+p
+summary(p)
+p <- p + geom_smooth()
+p
+?loess
+summary(p)
+p
+p <- ggplot(mtcars)
+summary(p)
+p <- p + aes(wt, hp)
+summary(p)
+p <- p + geom_point(aes(y = disp))
+summary(p)
+p <- p + geom_smooth()
+p
+p <- ggplot(mtcars, aes(mpg, wt))
+p + geom_point(colour = "darkblue")
+p <- ggplot(mtcars, aes(mpg, wt))
+p + geom_point(aes(colour = "darkblue"))
+p <- ggplot(mtcars, aes(mpg, wt))
+p + geom_point(colour = "darkblue")
+library(ggplot2)
+p <- ggplot(diamonds, aes(carat, price, colour = cut))
+p <- p + geom_point()
+p
+p <- p + geom_smooth()
+p
+p <- ggplot(mtcars, aes(mpg, wt))
+p + geom_point(colour = "darkblue")
+p <- ggplot(mtcars, aes(mpg, wt))
+p + geom_point(aes(colour = "darkblue"))
+df <- data.frame(people = c("Katie", "Andy"),)
+df <- data.frame(people = c("Katie", "Andy"),
+cool = c(2, 8)
+fun = c(1, 9.5)
+)
+df <- data.frame(people = c("Katie", "Andy"),
+cool = c(2, 8),
+fun = c(1, 9.5)
+)
+df
+plot <- ggplot(df, aes(cool, fun))
+plot <- plot + geom_text(aes(label = people), size = 5)
+plot
+plot <- ggplot(df, aes(cool, fun))
+plot <- plot + geom_text(aes(label = people), size = 5) + geom_smooth()
+plot
+df <- data.frame(people = c("Katie", "Andy", "Steve"),
+cool = c(2, 8, 10),
+fun = c(1, 9.5, 5)
+)
+plot <- ggplot(df, aes(cool, fun))
+plot <- plot + geom_text(aes(label = people), size = 5)
+plot
+df <- data.frame(people = c("Katie", "Andy", "Steve", "fruit flies"),
+cool = c(2, 8, 10, 1),
+fun = c(1, 9.5, 5, 0)
+)
+plot <- ggplot(df, aes(cool, fun))
+plot <- plot + geom_text(aes(label = people), size = 5)
+plot
+df <- data.frame(people = c("Katie", "Andy", "Steve", "fruit flies", "Bill Murray"),
+cool = c(2, 8, 10, 1, 9),
+fun = c(1, 9.5, 5, 0, 0)
+)
+plot <- ggplot(df, aes(cool, fun))
+plot <- plot + geom_text(aes(label = people), size = 5)
+plot
+df <- data.frame(people = c("Katie", "Andy", "Steve", "fruit flies", "Bill Murray"),
+cool = c(2, 8, 10, 1, 9),
+fun = c(1, 9.5, 5, 0, 9)
+)
+plot <- ggplot(df, aes(cool, fun))
+plot <- plot + geom_text(aes(label = people), size = 5)
+plot
+df <- data.frame(people = c("Katie", "Andy", "Steve", "fruit flies",
+"Bill Murray", "lobsters"),
+cool = c(2, 8, 10, 1, 9, 4),
+fun = c(1, 9.5, 5, 0, 9, 3)
+)
+plot <- ggplot(df, aes(cool, fun))
+plot <- plot + geom_text(aes(label = people), size = 5)
+plot
+plot <- ggplot(df, aes(cool, fun))
+plot <- plot + geom_text(aes(label = people), size = 5) + geom_smooth()
+plot
+plot <- ggplot(df, aes(cool, fun))
+plot <- plot + geom_text(aes(label = people), size = 5)
+plot
+cor(df$cool, df$fun)
+cov(df$cool, df$fun)
+cov(df$cool, df$fun) / (sd(df$cool)*sd(df$fun))
+library(ggplot2)
+df <- data.frame(people = c("Katie", "Andy", "Steve", "fruit flies",
+"Bill Murray", "lobsters"),
+cool = c(2, 8, 10, 1, 9, 4),
+fun = c(1, 9.5, 5, 0, 9, 3)
+)
+plot <- ggplot(df, aes(cool, fun))
+plot <- plot + geom_text(aes(label = people), size = 5)
+plot
+plot + geom_smooth()
+plot <- ggplot(df, aes(cool, fun))
+plot <- plot + geom_text(aes(label = people), size = 5)
+plot
+?setClass
+person <- setClass("person",)
+person
+setClass("person",
+slots = c(name = "character",
+age = "numeric"))
+url
+con <- url("http://www.hoopsstats.com/basketball/fantasy/nba/playerstats/13/1/eff/1-2")
+raw_data <- readLines(con)
+raw
+raw_data
+match <- regexpr("<CENTER>(.*?)</CENTER>|players/(.*?)/", players)
+players <- raw_data[-c(1:283)]
+players <- players[-c(10808:10907)]
+match <- regexpr("<CENTER>(.*?)</CENTER>|players/(.*?)/", players)
+data <- regmatches(players, match)
+data <- gsub("<CENTER>|</CENTER>|players/|/", "", data)
+m <- matrix(data, 20,)
+m <- t(m)
+df <- as.data.frame(m)
+names(df) <- c("rank", "player", "games", "min", "pts", "reb", "ast", "stl", "blk",
+"to", "pf", "d_reb", "o_reb", "fgm_a", "fg_pct", "3gm_a", "3_pct",
+"ftm_a", "pct", "eff")
+names(df) <- c("rank", "player", "games", "min", "pts", "reb", "ast", "stl", "blk",
+"to", "pf", "d_reb", "o_reb", "fgm_a", "fg_pct", "3gm_a", "3_pct",
+"ftm_a", "pct", "eff")
+index <- c(1, 3:13, 15, 17, 19:20)
+close(con)
+for (i in index) {
+df[, i] <- as.numeric(as.character(df[, i]))
+}
+library(ggplot2)
+head
+rm(con)
+head(df)
+qplot(pts, rank, data = df, geom = "point")
+qplot(rank, pts, data = df, geom = "point")
+qplot(rank, pts, data = df, geom = "point", "smooth")
+qplot(rank, pts, data = df, geom = c("point", "smooth"))
+choose(4, 2)
+(13 * choose(4, 2) * 12 * choose(4, 2)) / choose(52, 5)
+choose(13, 5)
+4 * choose(13, 5) / choose(52, 5)
+(13 * choose(4, 3) * choose(49, 2)) / choose(52, 5)
+(13 * choose(4, 2) * 12 * choose(4, 2) * 48) / choose(52, 5)
+(13 * choose(4, 2) * choose(50, 3)) / choose(52, 5)
+install.packages(c("bitops", "colorspace", "devtools", "evaluate", "foreign", "formatR", "knitr", "lattice", "Matrix", "mgcv", "nlme"))
+install.packages(c("bitops", "colorspace", "devtools", "evaluate",
+)
+)
+install.packages(c("bitops", "colorspace", "devtools", "evaluate", "foreign", "formatR", "knitr", "lattice", "Matrix", "mgcv", "nlme"))
+install.packages(c("bitops", "colorspace", "devtools", "evaluate",
+))
+install.packages(c("bitops", "colorspace", "devtools", "evaluate", "foreign"))
+install.packages(c("bitops", "colorspace", "devtools", "evaluate",
+"foreign"))
+install.packages(c("bitops", "colorspace", "devtools", "evaluate",
+install.packages(c("bitops", "colorspace", "devtools", "evaluate"))
+))
+install.packages(c("bitops", "colorspace", "devtools", "evaluate"))
+install.packages(c("bitops", "colorspace", "devtools", "evaluate"))
+install.packages(c("bitops", "colorspace", "devtools", "evaluate"))
+install.packages(c("foreign", "formatR", "knitr", "lattice"))
+install.packages(c("Matrix", "mgcv", "nlme"))
+library(ggplot2)
+install.packages(c("devtools", "digest", "rpart"))
+install.packages(c("boot", "cluster", "httpuv", "markdown", "MASS", "Matrix", "nlme", "plyr", "Rcpp", "rpart", "xtable"))
+install.packages("dplyr")
+library(dplyr)
+install.packages("ggplot2")
+install.packages("reshape2")
+install.packages("knitr")
+install.packages("dplr")
+install.packages("dplyr")
+library("dplyr", lib.loc="/Library/Frameworks/R.framework/Versions/3.1/Resources/library")
+library("ggplot2", lib.loc="/Library/Frameworks/R.framework/Versions/3.1/Resources/library")
+library("knitr", lib.loc="/Library/Frameworks/R.framework/Versions/3.1/Resources/library")
+install.packages("devtools")
+library("devtools", lib.loc="/Library/Frameworks/R.framework/Versions/3.1/Resources/library")
+library(dplyr)
+vignette(package = "dplyr")
+vignette(introduction, package = "dplyr")
+vignette("introduction", package = "dplyr")
+library(devtools)
+install_github("merlinoa\reserve")
+install_github("merlinoa/reserve")
+vignette("introduction", package = "reserve")
+install_github("merlinoa/reserve")
+vignette("introduction", package = "reserve")
+vignette("introduction", package = "reserve")
+install_github("merlinoa/reserve")
+library(reserve)
+vignette("introduction", package = "reserve")
+install_github("merlinoa/reserve")
+vignette("introduction", package = "reserve")
+vignette(package = "reserve")
+vignette("introduction", package = "reserve")
+vignette("introduction", package = "reserve")
+library(devtools)
+install("reserve")
+setwd("~/Google Drive/R Projects")
+install("reserve")
+install.packages(c("manipulate", "rmarkdown"))
+install.packages(c("boot", "cluster", "codetools", "foreign"), lib="C:/Program Files/R/R-3.1.2/library")
+install.packages(c("MASS", "Matrix", "mgcv", "nlme"), lib="C:/Program Files/R/R-3.1.2/library")
+install.packages("rebus")
+library(rebus)
+browseVignettes("rebus")
+shiny::runApp('C:/Users/Andy/Desktop/BGCA/dashboard')
+shiny::runApp('C:/Users/Andy/Desktop/BGCA/dashboard')
+shiny::runApp('C:/Users/Andy/Desktop/BGCA/dashboard')
+shiny::runApp('C:/Users/Andy/Google Drive/bng-club/dashboard')
+shiny::runApp('C:/Users/Andy/Google Drive/bng-club/dashboard')
+shiny::runApp('C:/Users/Andy/Google Drive/bng-club/dashboard')
+install.packages(c("car", "manipulate", "shiny"))
+install.packages(c("boot", "class"), lib="C:/Program Files/R/R-3.1.2/library")
+install.packages(c("cluster", "KernSmooth", "nnet", "rpart", "spatial"), lib="C:/Program Files/R/R-3.1.2/library")
+shiny::runApp('C:/Users/Andy/Google Drive/bng-club/dashboard')
+load("C:/Users/Andy/Google Drive/bng-club/data/attended.rda")
+head(attended)
+head(attended)
+?glm
+trial_logit
+library(dplyr)
+library(lubridate)
+library(reshape2)
+# use year end data NMSIF WC data for
+load(file = "C:/Users/Andy/Google Drive/ANDY CLIENT DIRECTORY/NMSIF/wc-data/wc-loss.rda")
+db <- filter(wc_loss,
+month(evaluation_date) == 6)
+rm("wc_loss")
+# create columns for analysis
+db <- mutate(db,
+origin = as.numeric(substr(fiscal_year_desc, 1, 4)),
+evaluation_year = year(evaluation_date),
+dev = evaluation_year - origin,
+closed_year = year(closed_date),
+open = ifelse(is.na(closed_year), 1, 0),
+case = reserve_amount - payment_amount) %>%
+select(claim_number, origin, dev, open, case) %>%
+filter(dev < 3)
+population <- melt(db,
+measure.vars = c("case", "open"),
+id.vars = c("claim_number", "origin", "dev"))
+# create trial sample
+# note: 2006 has problems
+trial <- filter(population, origin %in% 2007:2010)
+# cast trial into wide format
+trial <- dcast(trial,
+claim_number ~ variable + dev,
+value.var = "value",
+fun.aggregate = NULL)
+trial$open_1 <- as.factor(trial$open_1)
+trial$open_2 <- as.factor(trial$open_2)
+trial <- trial[!is.na(trial$open_1), ] # remove claims not reported in dev period 1
+# run logit probability regression to predcit probability claim is open next year
+# using open status of previous year and case outstanding
+trial_logit <- glm(open_2 ~ open_1 + case_1, data = trial, family = "binomial")
+trial$prediction <- predict(trial_logit, type = "response")
+# compare prediction to actual from trial
+sum(as.numeric(as.character(trial$open_2)))
+sum(trial$prediction)
+# use model fitted to trial sample on test data
+# create test sample
+test <- filter(population, origin %in% 2011:2012)
+# cast test into wide format
+test <- dcast(test,
+claim_number ~ variable + dev,
+value.var = "value",
+fun.aggregate = NULL)
+test$open_1 <- as.factor(test$open_1)
+test$open_2 <- as.factor(test$open_2)
+test <- test[!is.na(test$open_1), ] # remove claims not reported in dev period 1
+test$prediction <- predict(trial_logit,
+newdata = test,
+type = "response")
+# compare prediction to actual from test sample
+sum(as.numeric(as.character(test$open_2)))
+sum(test$prediction)
+sum(as.numeric(as.character(trial$open_2))) / sum(as.numeric(as.character(trial$open_1))) * sum(as.numeric(as.character(test$open_1)))
+trial_logit
+plot(trial_logit)
+plot(trial_logit)
+install.packages("popbio")
+library(popbio)
+curve(predict(trial_logit, trial$open_2, type = "response"), add = TRUE)
+curve(trial_logit, add = TRUE)
+curve(predict(trial_logit, type = "response"), add = TRUE)
+?predict
+plot(c(1,32), c(0,1), type = "n", xlab = "dose",
+ylab = "prob", log = "x")
+ldose <- rep(0:5, 2)
+numdead <- c(1, 4, 9, 13, 18, 20, 0, 2, 6, 10, 12, 16)
+sex <- factor(rep(c("M", "F"), c(6, 6)))
+SF <- cbind(numdead, numalive = 20-numdead)
+budworm.lg <- glm(SF ~ sex*ldose, family = binomial)
+summary(budworm.lg)
+text(2^ldose, numdead/20, as.character(sex))
+ld <- seq(0, 5, 0.1)
+lines(2^ld, predict(budworm.lg, data.frame(ldose = ld,
+sex = factor(rep("M", length(ld)), levels = levels(sex))),
+type = "response"))
+lines(2^ld, predict(budworm.lg, data.frame(ldose = ld,
+sex = factor(rep("F", length(ld)), levels = levels(sex))),
+type = "response"))
+plot(y = c(0, 1), x = trial$open_1)
+plot(y = trial$open_1, x = trial$prediction)
+head(trial)
+trial$open_1
+plot(y = trial$open_2, x = trial$prediction)
+library(ggplot2)
+install.packages(c("boot", "class", "codetools", "foreign", "KernSmooth"), lib="C:/Program Files/R/R-3.1.2/library")
+install.packages(c("lattice", "MASS", "mgcv", "nlme"), lib="C:/Program Files/R/R-3.1.2/library")
+install.packages(c("nnet", "rpart", "spatial", "survival"), lib="C:/Program Files/R/R-3.1.2/library")
+library(ggplot2)
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("colorspace")
+library(ggplot2)
+trial_logit <- glm(open_2 ~ case_1, data = trial, family = "binomial")
+trial$prediction <- predict(trial_logit, type = "response")
+trial_logit
+head(trial)
+head(trial, 100)
+trial_logit <- glm(open_2 ~ open_1 + case_1 + open_1:case_1, data = trial, family = "binomial")
+trial$prediction <- predict(trial_logit, type = "response")
+trial_logit
+summary(trial_logit)
+trial_logit <- glm(open_2 ~ open_1:case_1, data = trial, family = "binomial")
+trial_logit
+summary(trial_logit)
+trial$prediction <- predict(trial_logit, type = "response")
+head(trial, 100)
+trial_logit <- glm(open_2 ~ open_1 + case_1, data = trial, family = "binomial")
+trial$prediction <- predict(trial_logit, type = "response")
+head(trial, 100)
+trial[trial$open_1 == "0" & trial$open_2 == 1, ]
+?predict
+trial$logit <- predit(trial_logit)
+trial$logit <- predict(trial_logit)
+plot(x = trial$logit, y = trial$prediction)
+load(file = "C:/Users/Andy/Google Drive/ANDY CLIENT DIRECTORY/NMSIF/wc-data/wc-loss.rda")
+db <- filter(wc_loss,
+month(evaluation_date) == 6)
+rm("wc_loss")
+# create columns for analysis
+db <- mutate(db,
+origin = as.numeric(substr(fiscal_year_desc, 1, 4)),
+evaluation_year = year(evaluation_date),
+dev = evaluation_year - origin,
+closed_year = year(closed_date),
+open = ifelse(is.na(closed_year), 1, 0),
+case = reserve_amount - payment_amount) %>%
+select(claim_number, origin, dev, open, case) %>%
+filter(dev < 3)
+population <- melt(db,
+measure.vars = c("case", "open"),
+id.vars = c("claim_number", "origin", "dev"))
+# create trial sample
+# note: 2006 has problems
+trial <- filter(population, origin %in% 2007:2010)
+# cast trial into wide format
+trial <- dcast(trial,
+claim_number ~ variable + dev,
+value.var = "value",
+fun.aggregate = NULL)
+trial$open_1 <- as.factor(trial$open_1)
+trial$open_2 <- as.factor(trial$open_2)
+trial <- trial[!is.na(trial$open_1), ] # remove claims not reported in dev period 1
+# run logit probability regression to predcit probability claim is open next year
+# using open status of previous year and case outstanding
+trial_logit <- glm(open_2 ~ open_1 + case_1, data = trial, family = "binomial")
+trial$prob <- predict(trial_logit, type = "response")
+trial$logit_scale <- predict(trial_logit)
+ggplot(trial, aes(x = logit_scale, y = prob)) +
+geom_line()
+ggplot(trial, aes(x = logit_scale, y = prob)) +
+geom_line() +
+geom_point(aes(x = logit_scale, y = open_1))
+ggplot(trial, aes(x = logit_scale, y = prob)) +
+geom_line() +
+geom_point(aes(x = logit_scale, y = as.numeric(as.character(open_1))))
+?geom_point
+ggplot(trial, aes(x = logit_scale, y = prob)) +
+geom_line() +
+geom_point(aes(x = logit_scale, y = as.numeric(as.character(open_1))),
+position = "jitter")
+table(trial$logit_scale)
+n+table <- table(trial$logit_scale)
+n_table <- table(trial$logit_scale)
+data.frame("logit_scale" = names(n_table), n_table)
+left_join(trial, freq_table, by = logit_scale)
+names(freq_table) <- c("logit_scale", "freq")
+freq_table <- as.data.frame(table(trial$logit_scale))
+names(freq_table) <- c("logit_scale", "freq")
+left_join(trial, freq_table, by = logit_scale)
+head(freq_table)
+left_join(trial, freq_table, by = "logit_scale")
+freq_table$logit_scale <- as.numeric(as.character(freq_table$logit_scale))
+left_join(trial, freq_table, by = "logit_scale")
+left_join(trial, freq_table[, 2], by = "logit_scale")
+?left_join
+freq_table
+head(trial)
+trial$logit_scale <- round(predict(trial_logit),5)
+freq_table <- as.data.frame(table(trial$logit_scale))
+names(freq_table) <- c("logit_scale", "freq")
+freq_table$logit_scale <- as.numeric(as.character(freq_table$logit_scale))
+left_join(trial, freq_table, by = "logit_scale")
+trial <- left_join(trial, freq_table, by = "logit_scale")
+ggplot(trial, aes(x = logit_scale, y = prob)) +
+geom_line() +
+geom_point(aes(x = logit_scale, y = as.numeric(as.character(open_1))),
+size = freq)
+ggplot(trial, aes(x = logit_scale, y = prob)) +
+geom_line() +
+geom_point(aes(x = logit_scale, y = as.numeric(as.character(open_1)), size = freq))
+ggplot(trial, aes(x = logit_scale, y = prob)) +
+geom_line() +
+geom_point(aes(x = logit_scale, y = as.numeric(as.character(open_2)), size = freq))
+ggplot(trial, aes(x = logit_scale, y = prob)) +
+geom_line() +
+geom_point(aes(x = logit_scale, y = as.numeric(as.character(open_1)), size = freq))
+ggplot(trial, aes(x = logit_scale, y = prob)) +
+geom_line() +
+geom_point(aes(x = logit_scale, y = as.numeric(as.character(open_1)), size = freq, colour = "red"))
+ggplot(trial, aes(x = logit_scale, y = prob)) +
+geom_line() +
+geom_point(aes(x = logit_scale, y = as.numeric(as.character(open_1)), size = freq, colour = I("red")))
+ggplot(trial, aes(x = logit_scale, y = prob)) +
+geom_line() +
+geom_point(aes(x = logit_scale, y = as.numeric(as.character(open_1)), size = freq, colour = I(red)))
+ggplot(trial, aes(x = logit_scale, y = prob)) +
+geom_line() +
+geom_point(aes(x = logit_scale, y = as.numeric(as.character(open_1)), size = freq,), colour = "red")
+ggplot(trial, aes(x = logit_scale, y = prob)) +
+geom_line() +
+geom_point(aes(x = logit_scale, y = as.numeric(as.character(open_1)), size = freq), colour = "red")
+library(devtools)
+install_github("RcppCore/Rcpp")
+install_github("rstats-db/DBI")
+install_github("rstats-db/RPostgres")
+library(RPostgres)
+library(DBI)
+library(shinydashboard)
+setwd("C:/Users/Andy/Google Drive/r-projects/vehicle-exposure-dashboard/dashboard")
+runApp()
+library(shiny)
+runApp()
+setwd("C:/Users/Andy/Google Drive/r-projects/vehicle-exposure-dashboard/dashboard")
+library(dplyr)
+?src_postgres
+?copy_to
+?src_postgres
+src_postgres(dbname = "NCSB",
+host = "localhost",
+port = 5432,
+user = "postgres",
+password = "1234qwer")
+install.packages("RPostgreSQL")
+src_postgres(dbname = "NCSB",
+host = "localhost",
+port = 5432,
+user = "postgres",
+password = "1234qwer")
+vehicles <- src_postgres(dbname = "NCSB",
+host = "localhost",
+port = 5432,
+user = "postgres",
+password = "1234qwer")
+collect(vehicles)
+ncsb_db <- src_postgres(dbname = "NCSB",
+host = "localhost",
+port = 5432,
+user = "postgres",
+password = "1234qwer")
+vehicles <- tbl(ncsb_db, (SELECT * FROM vehicles))
+vehicles <- tbl(ncsb_db, sql(SELECT * FROM vehicles))
+vehicles <- tbl(ncsb_db, sql("SELECT * FROM vehicles"))
+collect(vehicles)
+ncsb_db <- src_postgres(dbname = "NCSB",
+host = "localhost",
+port = 5432,
+user = "postgres",
+password = "1234qwer")
+vehicles <- tbl(ncsb_db, sql("SELECT * FROM vehicles"))
+collect(vehicles)
+shiny::runApp()
+shiny::runApp()
