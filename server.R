@@ -2,62 +2,7 @@
 
 function(input, output, session) {
   
-  # vehicles summary ----------------------------------------------------------
-  vehicles_summary <- reactive({
-    # subset by active vehicles
-    if (identical(input$active_vehicles_summary, "active_vehicles_only")) {
-      summary <- vehicles[vehicles$delete_date >= input$vehicle_date_summary | 
-                       is.na(vehicles$delete_date), ]
-    } else {
-      summary <- vehicles
-    }
-    
-    summary <- group_by_(
-      summary,
-      input$group_by_vehicles
-    ) %>% summarise_(
-      vehicles = ~n(),
-      ACV = ~sum(acv, na.rm = TRUE)
-    )
-    
-    totals <- lapply(summary[, 2:3], sum, na.rm = TRUE)
-    
-    totals <- data.frame(
-      "Totals:", 
-      totals[1],
-      totals[2]
-    )
-    
-    names(totals) <- names(summary)
-    
-    rbind(
-      summary, 
-      totals
-    )
-  })
-  
-  output$vehicles_summary_out <- renderDataTable({
-    vehicles_summary()
-  })
-  
-  # vechile summary table download
-  output$download_vehicles_summary <- downloadHandler(
-    filename = function() {
-      paste0(
-        "vehicle-summary-",
-        input$vehicle_date_summary,
-        ".csv")
-    },
-    content = function(file) {
-      write.csv(
-        vehicles_summary(),
-        file = file,
-        row.names = FALSE
-      )
-    }
-  )
-  
-  # All vehicles --------------------------------------------------------------- 
+  # vehicles --------------------------------------------------------------- 
   vehicles_table <- reactive({
     holder <- vehicles[, setdiff(names(vehicles), c("vehicle_id", "class"))]
     # subset by active vehicles
@@ -98,18 +43,22 @@ function(input, output, session) {
     input$submit_request
     isolate({
       if (identical(input$request_type, add)) {
-        paste(
-          max(vehicles$vehicle_id) + 1,
-          input$vin_request,
-          input$year_request,
-          input$make_request,
-          input$model_request,
-          input$class_request,
-          input$acv_request,
-          input$add_date,
-          NULL,
-          Sys.time()
-        )
+        add_request <- paste(
+                         "INSERT INTO vehicles values(",
+                         as.integer(max(vehicles$vehicle_id) + 1.01),
+                         input$vin_request,
+                         input$member_request,
+                         input$year_request,
+                         input$make_request,
+                         input$model_request,
+                         input$class_request,
+                         input$acv_request,
+                         input$add_date,
+                         NULL,
+                         Sys.time(),
+                         ");"
+                       )
+        dbSendQuery(al_db, add_request)
       } else if (identical(input$request_type, delete)) {
         # todo: delete request
       } else {

@@ -8,8 +8,7 @@ header <- dashboardHeader(
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("Vehicles - Summary", tabName = "vehicles_summary_tab", icon = icon("car")),
-    menuItem("All Vehicles", tabName = "vehicles_tab", icon = icon("car")),
+    menuItem("Vehicles", tabName = "vehicles_tab", icon = icon("car")),
     menuItem("Request Form", icon = icon("file-text"), tabName = "request_form_tab"),
     menuItem("Rates", icon = icon("money"), tabName = "rates_tab")
   )
@@ -17,58 +16,10 @@ sidebar <- dashboardSidebar(
 
 body <- dashboardBody(
   tabItems(
-    
-    # Vehicles Summary tab --------------------------------------------------------
-    tabItem(tabName = "vehicles_summary_tab",
-      fluidRow(
-        box(width = 4,
-          radioButtons(
-            inputId = "active_vehicles_summary",
-            label = NULL,  
-            choices = list(
-                       "All Vehicles" = "all_vehicles",
-                       "Active Vehicles Only" = "active_vehicles_only"
-                      )
-            ),
-          conditionalPanel(
-            condition = "input.active_vehicles_summary == 'active_vehicles_only'",
-            dateInput(
-              inputId = "vehicle_date_summary",
-              label = "Active Vehicles as of:",
-              value = Sys.Date()
-            )
-          )
-        ),
-        box(
-          width = 4,
-          radioButtons(
-            inputId = "group_by_vehicles",
-            label = "Summarize By:",
-            choices = list(
-                        "Member" = "member_number",
-                        "Vehicle Class" = "class"
-                      )
-          )
-        ),
-        box(
-          width = 4,
-          downloadButton(
-            outputId = "download_vehicles_summary", 
-            label = "Download Vehicles Summary"
-          )
-        ),
-        box(
-          width = 12,  
-          dataTableOutput("vehicles_summary_out")
-        )
-      )
-    ),
-  
-    
-  # Individual Vehicles tab -----------------------------------------------     
+  # Vehicles tab -----------------------------------------------     
     tabItem(tabName = "vehicles_tab", 
       fluidRow(
-        box(width = 4,
+        box(width = 3,
           radioButtons(
             inputId = "active_vehicles", 
             label = NULL,  
@@ -86,7 +37,7 @@ body <- dashboardBody(
             )
           )
         ),
-        box(width = 4,
+        box(width = 3,
           selectizeInput(
             inputId = "member_vehicles",
             label = "Member",
@@ -95,7 +46,18 @@ body <- dashboardBody(
             selected = "All"
           )
         ),
-        box(width = 4,
+        box(
+          width = 3,
+          radioButtons(
+            inputId = "group_by_vehicles",
+            label = "Summarize By:",
+            choices = list(
+              "Member" = "member_num",
+              "Vehicle Class" = "class"
+            )
+          )
+        ),
+        box(width = 3,
             downloadButton("download_vehicles", label = "Download Vehicles Table")
         ),
         box(width = 12,  
@@ -124,6 +86,11 @@ body <- dashboardBody(
             inputId = "vin_request",
             label = "Vin #"
           ),
+          numericInput(
+            inputId = "member_request",
+            label = "Member #",
+            210
+          ),
           textInput(
             inputId = "year_request",
             label = "Year"
@@ -136,9 +103,19 @@ body <- dashboardBody(
             inputId = "model_request",
             label = "Model"
           ),
-          checkboxInput(
+          selectInput(
             inputId = "class_request",
-            label = "Class"
+            label = "Class",
+            choices = c(200, 201, 202,
+                        300, 301, 302,
+                        400, 401, 402,
+                        500, 501, 502,
+                        600, 601, 602)
+          ),
+          numericInput(
+            inputId = "acv_request",
+            label = "Actual Cost Value",
+            15000
           ),
           dateInput(
             inputId = "date_request",
