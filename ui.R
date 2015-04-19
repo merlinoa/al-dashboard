@@ -41,7 +41,7 @@ body <- dashboardBody(
           selectizeInput(
             inputId = "member_vehicles",
             label = "Member",
-            choices = c(unique(vehicles$member_number), "All"),
+            choices = c(unique(vehicles$member_num), "All"),
             multiple = TRUE,
             selected = "All"
           )
@@ -50,8 +50,9 @@ body <- dashboardBody(
           width = 3,
           radioButtons(
             inputId = "group_by_vehicles",
-            label = "Summarize By:",
+            label = "Group By:",
             choices = list(
+              "Vehicle" = "vin",
               "Member" = "member_num",
               "Vehicle Class" = "class"
             )
@@ -77,7 +78,7 @@ body <- dashboardBody(
             inputId = "vin_request",
             label = "Vin #"
           ),
-          numericInput(
+          selectInput(
             inputId = "member_request",
             label = "Member #",
             choices = list(
@@ -90,7 +91,7 @@ body <- dashboardBody(
           selectInput(
             inputId = "year_request",
             label = "Year",
-            choices = 1970:2016
+            choices = 2016:1970
           ),
           textInput(
             inputId = "make_request",

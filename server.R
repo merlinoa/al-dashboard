@@ -4,11 +4,15 @@ function(input, output, session) {
   
   # vehicles --------------------------------------------------------------- 
   vehicles_table <- reactive({
-    holder <- vehicles[, setdiff(names(vehicles), c("vehicle_id", "class"))]
+    
+    invalidateLater(10000000, session)
+    holder <- vehicles[, setdiff(names(vehicles), c("vehicle_id", 
+                                                    "add_request_date", 
+                                                    "delete_request_date"))]
     # subset by active vehicles
     if (identical(input$active_vehicles, "active_vehicles_only")) {
-      holder <- holder[holder$delete_date >= input$vehicle_date | 
-                      is.na(holder$delete_date), ]
+      holder <- holder[holder$delete_effective_date >= input$vehicle_date | 
+                      is.na(holder$delete_effective_date), ]
     }
     
     # subset by member number
@@ -17,6 +21,19 @@ function(input, output, session) {
     } else {
       holder <- holder[holder$member_number %in% as.numeric(input$member_vehicles), ]
     }
+    
+    # group by vin, member, or vehicle class
+    if (identical("member_num", input$group_by_vehicles)) {
+      holder <- group_by(holder, member_num) %>%
+                  summarise("Vehicles" = n(), 
+                    "ACV" = sum(acv, na.rm = TRUE))
+    }
+    if (identical("class", input$group_by_vehicles)) {
+      holder <- group_by(holder, class) %>%
+        summarise("Vehicles" = n(), 
+                  "ACV" = sum(acv, na.rm = TRUE))
+    }
+  
     
     holder
   })
@@ -39,27 +56,29 @@ function(input, output, session) {
   
   #------------------Request Form-------------------------------------
   
-  request_sql <- reactive({
+  observe({
     input$submit_request
     isolate({
-      add_request <- paste(
-                       "INSERT INTO vehicles values(",
-                       as.integer(max(vehicles$vehicle_id) + 1.01),
-                       input$vin_request,
-                       input$member_request,
-                       input$year_request,
-                       input$make_request,
-                       input$model_request,
-                       input$class_request,
-                       input$acv_request,
-                       input$add_date,
-                       NULL,
-                       Sys.time(),
-                       ");"
-                     )
-      dbSendQuery(al_db$con, add_request)
+      request_sql <- paste0(
+                      "INSERT INTO vehicles VALUES(",
+                      as.integer(max(vehicles$vehicle_id) + 1.01), ", ",
+                      "'", input$vin_request, "', ", 
+                      input$member_request, ", ",
+                      input$year_request, ", ",
+                      "'", input$make_request, "', ",
+                      "'", input$model_request, "', ",
+                      input$class_request, ", ",
+                      input$acv_request, ", ",
+                      "'", input$date_request, "', ",
+                      "NULL, ",
+                      "'", Sys.Date(), "', ",
+                      "NULL); "
+      )
+      dbGetQuery(conn = al_db$con,
+                 statement = request_sql)
     })
   })
+  
   
   #---------------------Rates-----------------------------------------
   
