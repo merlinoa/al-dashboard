@@ -42,36 +42,24 @@ function(input, output, session) {
   request_sql <- reactive({
     input$submit_request
     isolate({
-      if (identical(input$request_type, add)) {
-        add_request <- paste(
-                         "INSERT INTO vehicles values(",
-                         as.integer(max(vehicles$vehicle_id) + 1.01),
-                         input$vin_request,
-                         input$member_request,
-                         input$year_request,
-                         input$make_request,
-                         input$model_request,
-                         input$class_request,
-                         input$acv_request,
-                         input$add_date,
-                         NULL,
-                         Sys.time(),
-                         ");"
-                       )
-        dbSendQuery(al_db, add_request)
-      } else if (identical(input$request_type, delete)) {
-        # todo: delete request
-      } else {
-        # todo: change request
-      }
+      add_request <- paste(
+                       "INSERT INTO vehicles values(",
+                       as.integer(max(vehicles$vehicle_id) + 1.01),
+                       input$vin_request,
+                       input$member_request,
+                       input$year_request,
+                       input$make_request,
+                       input$model_request,
+                       input$class_request,
+                       input$acv_request,
+                       input$add_date,
+                       NULL,
+                       Sys.time(),
+                       ");"
+                     )
+      dbSendQuery(al_db$con, add_request)
     })
   })
-  
-  
-  #dbSendQuery(
-  #  al_db$con, 
-  #  'INSERT INTO vehicles VALUES (9.9, 9.9, 9.9, 9.9, "new")'
-  #)
   
   #---------------------Rates-----------------------------------------
   

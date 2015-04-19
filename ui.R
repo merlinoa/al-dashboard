@@ -9,7 +9,7 @@ header <- dashboardHeader(
 sidebar <- dashboardSidebar(
   sidebarMenu(
     menuItem("Vehicles", tabName = "vehicles_tab", icon = icon("car")),
-    menuItem("Request Form", icon = icon("file-text"), tabName = "request_form_tab"),
+    menuItem("Add Vehicle", icon = icon("file-text"), tabName = "add_vehicle_tab"),
     menuItem("Rates", icon = icon("money"), tabName = "rates_tab")
   )
 )
@@ -68,20 +68,11 @@ body <- dashboardBody(
   
   # Request for tab --------------------------------------------------------------
     tabItem(
-      tabName = "request_form_tab",
+      tabName = "add_vehicle_tab",
       fluidRow(
         box(
           width = 6,
-          h2("Vehicle Request Form"),
-          radioButtons(
-            inputId = "request_type", 
-            label = "Request Type",
-            choices = list(
-                        "Add" = "add",
-                        "Delete" = "delete",
-                        "Change" = "change"
-                      )
-          ),
+          h2("Add Vehicle"),
           textInput(
             inputId = "vin_request",
             label = "Vin #"
@@ -89,11 +80,17 @@ body <- dashboardBody(
           numericInput(
             inputId = "member_request",
             label = "Member #",
-            210
+            choices = list(
+                        "Andy County - 210" = 210,
+                        "Andy School - 450" = 450,
+                        "Merlino County - 720" = 720,
+                        "Merlino School - 740" = 740
+                      )
           ),
-          textInput(
+          selectInput(
             inputId = "year_request",
-            label = "Year"
+            label = "Year",
+            choices = 1970:2016
           ),
           textInput(
             inputId = "make_request",
