@@ -1,4 +1,5 @@
 library(dplyr)
+library(RPostgreSQL)
 
 # connect to database
 al_db <- src_postgres(
@@ -12,4 +13,7 @@ al_db <- src_postgres(
 
 # query all vehicles from data base
 vehicles <- tbl(al_db, "vehicles")
-vehicles <- as.data.frame(vehicles)
+holder <- select(vehicles, 
+                 -vehicle_id, 
+                 -add_request_date, 
+                 -delete_request_date)
