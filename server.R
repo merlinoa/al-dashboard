@@ -4,38 +4,37 @@ function(input, output, session) {
   
   # vehicles --------------------------------------------------------------- 
   vehicles_table <- reactive({
-    
-    invalidateLater(10000000, session)
-    holder <- vehicles[, setdiff(names(vehicles), c("vehicle_id", 
-                                                    "add_request_date", 
-                                                    "delete_request_date"))]
     # subset by active vehicles
     if (identical(input$active_vehicles, "active_vehicles_only")) {
-      holder <- holder[holder$delete_effective_date >= input$vehicle_date | 
-                      is.na(holder$delete_effective_date), ]
+      holder <- filter(holder, 
+                  delete_effective_date >= input$vehicle_date | 
+                  is.na(delete_effective_date)
+                )
     }
     
     # subset by member number
     if ("All" %in% input$member_vehicles) {
       # don't do anything
     } else {
-      holder <- holder[holder$member_number %in% as.numeric(input$member_vehicles), ]
+      holder <- filter(holder, 
+                  member_num %in% as.numeric(input$member_vehicles)
+                )
     }
     
     # group by vin, member, or vehicle class
     if (identical("member_num", input$group_by_vehicles)) {
       holder <- group_by(holder, member_num) %>%
                   summarise("Vehicles" = n(), 
-                    "ACV" = sum(acv, na.rm = TRUE))
+                    "ACV" = sum(acv))
     }
     if (identical("class", input$group_by_vehicles)) {
       holder <- group_by(holder, class) %>%
         summarise("Vehicles" = n(), 
-                  "ACV" = sum(acv, na.rm = TRUE))
+                  "ACV" = sum(acv))
     }
   
     
-    holder
+    as.data.frame(holder)
   })
   
   output$vehicles_table_out <- renderDataTable({
