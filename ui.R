@@ -41,7 +41,7 @@ body <- dashboardBody(
           selectizeInput(
             inputId = "member_vehicles",
             label = "Member",
-            choices = c(unique(vehicles$member_num), "All"),
+            choices = c(unique(as.data.frame(select(vehicles, member_num))$member_num), "All"),
             multiple = TRUE,
             selected = "All"
           )
