@@ -24,13 +24,11 @@ function(input, output, session) {
     # group by vin, member, or vehicle class
     if (identical("member_num", input$group_by_vehicles)) {
       holder <- group_by(holder, member_num) %>%
-                  summarise("Vehicles" = n(), 
-                    "ACV" = sum(acv))
+                  summarise("Vehicles" = n())
     }
     if (identical("class", input$group_by_vehicles)) {
       holder <- group_by(holder, class) %>%
-        summarise("Vehicles" = n(), 
-                  "ACV" = sum(acv))
+        summarise("Vehicles" = n())
     }
   
     
@@ -62,11 +60,7 @@ function(input, output, session) {
                        "INSERT INTO vehicles VALUES(",
                        "'", input$vin_request, "', ", 
                        input$member_request, ", ",
-                       input$year_request, ", ",
-                       "'", input$make_request, "', ",
-                       "'", input$model_request, "', ",
                        input$class_request, ", ",
-                       input$acv_request, ", ",
                        "'", input$date_request, "', ",
                        "NULL, ",
                        "'", Sys.Date(), "', ",

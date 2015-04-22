@@ -84,36 +84,19 @@ body <- dashboardBody(
             choices = list(
                         "Andy County - 210" = 210,
                         "Andy School - 450" = 450,
-                        "Merlino County - 720" = 720,
+                        "Merlino County - 660" = 660,
                         "Merlino School - 740" = 740
                       )
           ),
           selectInput(
-            inputId = "year_request",
-            label = "Year",
-            choices = 2016:1970
-          ),
-          textInput(
-            inputId = "make_request",
-            label = "Make"
-          ),
-          textInput(
-            inputId = "model_request",
-            label = "Model"
-          ),
-          selectInput(
             inputId = "class_request",
-            label = "Class",
-            choices = c(200, 201, 202,
-                        300, 301, 302,
-                        400, 401, 402,
-                        500, 501, 502,
-                        600, 601, 602)
-          ),
-          numericInput(
-            inputId = "acv_request",
-            label = "Actual Cost Value",
-            15000
+            label = "Vehicle Class",
+            choices = list("Compact - 100" = 100,
+                           "Sedan - 101" = 101, 
+                           "Truck- 300" = 200, 
+                           "SUV - 301" = 300, 
+                           "BUS - 400" = 302
+                           )
           ),
           dateInput(
             inputId = "date_request",

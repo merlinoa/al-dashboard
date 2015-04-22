@@ -14,6 +14,5 @@ al_db <- src_postgres(
 # query all vehicles from data base
 vehicles <- tbl(al_db, "vehicles")
 holder <- select(vehicles, 
-                 -vehicle_id, 
                  -request_date, 
                  -request_type)
