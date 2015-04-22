@@ -59,20 +59,19 @@ function(input, output, session) {
     input$submit_request
     isolate({
       request_sql <- paste0(
-                      "INSERT INTO vehicles VALUES(",
-                      as.integer(max(vehicles$vehicle_id) + 1.01), ", ",
-                      "'", input$vin_request, "', ", 
-                      input$member_request, ", ",
-                      input$year_request, ", ",
-                      "'", input$make_request, "', ",
-                      "'", input$model_request, "', ",
-                      input$class_request, ", ",
-                      input$acv_request, ", ",
-                      "'", input$date_request, "', ",
-                      "NULL, ",
-                      "'", Sys.Date(), "', ",
-                      "NULL); "
-      )
+                       "INSERT INTO vehicles VALUES(",
+                       "'", input$vin_request, "', ", 
+                       input$member_request, ", ",
+                       input$year_request, ", ",
+                       "'", input$make_request, "', ",
+                       "'", input$model_request, "', ",
+                       input$class_request, ", ",
+                       input$acv_request, ", ",
+                       "'", input$date_request, "', ",
+                       "NULL, ",
+                       "'", Sys.Date(), "', ",
+                       "'add');"
+                     )
       dbGetQuery(conn = al_db$con,
                  statement = request_sql)
     })
