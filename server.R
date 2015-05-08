@@ -2,37 +2,47 @@
 
 function(input, output, session) {
   
-  # vehicles --------------------------------------------------------------- 
-  vehicles_table <- reactive({
+  # vehicles ---------------------------------------------------------------
+  vehicles_active <- reactive({
     # subset by active vehicles
     if (identical(input$active_vehicles, "active_vehicles_only")) {
-      holder <- filter(holder, 
-                  delete_effective_date >= input$vehicle_date | 
-                  is.na(delete_effective_date)
-                )
+      filter(holder, 
+        delete_effective_date >= input$vehicle_date | 
+          is.na(delete_effective_date
+        )
+      )
+    } else {
+      holder
     }
-    
+  })
+  
+  vehicles_member <- reactive({
     # subset by member number
     if ("All" %in% input$member_vehicles) {
-      # don't do anything
+      # don't do anythingo
+      vehicles_active()
     } else {
-      holder <- filter(holder, 
-                  member_num %in% as.numeric(input$member_vehicles)
-                )
+      filter(vehicles_active(), 
+        member_num %in% input$member_vehicles # not working. works for 1 member with ==
+      )
     }
-    
+  })
+  
+  vehicles_group <- reactive({
     # group by vin, member, or vehicle class
     if (identical("member_num", input$group_by_vehicles)) {
-      holder <- group_by(holder, member_num) %>%
-                  summarise("Vehicles" = n())
-    }
-    if (identical("class", input$group_by_vehicles)) {
-      holder <- group_by(holder, class) %>%
+      group_by(vehicles_member(), member_num) %>%
         summarise("Vehicles" = n())
+    } else if (identical("class", input$group_by_vehicles)) {
+      out <- group_by(vehicles_member(), class) %>%
+               summarise("Vehicles" = n())
+    } else {
+      vehicles_member() 
     }
-  
-    
-    as.data.frame(holder)
+  })
+   
+  vehicles_table <- reactive({  
+    as.data.frame(vehicles_group())
   })
   
   output$vehicles_table_out <- renderDataTable({

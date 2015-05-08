@@ -110,6 +110,7 @@ body <- dashboardBody(
   # ---- Rates tab ---------------------------------------------------------
     tabItem(
       tabName = "rates_tab"
+      
     )
   )
 )
