@@ -8,7 +8,7 @@ header <- dashboardHeader(
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("Vehicles", tabName = "vehicles_tab", icon = icon("car")),
+    menuItem("Vehicles Table", tabName = "vehicles_tab", icon = icon("car")),
     menuItem("Add Vehicle", icon = icon("file-text"), tabName = "add_vehicle_tab"),
     menuItem("Rates", icon = icon("money"), tabName = "rates_tab")
   )
@@ -59,7 +59,7 @@ body <- dashboardBody(
           )
         ),
         box(width = 3,
-            downloadButton("download_vehicles", label = "Download Vehicles Table")
+            downloadButton("download_vehicles", label = "Download Table")
         ),
         box(width = 12,  
           dataTableOutput("vehicles_table_out")
