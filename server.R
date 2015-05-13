@@ -1,6 +1,24 @@
 ## server.R ##
+library(DiagrammeR)
 
 function(input, output, session) {
+  # dashboard --------------------------------------------------------------
+  vehicles_group <- reactive({
+    active_vehicles <- filter(holder, is.na(delete_effective_date))
+    # group by vin, member, or vehicle class
+    if (identical("member_num", input$group_by_vehicles)) {
+      out <- group_by(active_vehicles, member_num) %>%
+        summarise("Vehicles" = n())
+    } else {
+      out <- group_by(active_vehicles, class) %>%
+        summarise("Vehicles" = n())
+    }
+    out
+  })
+  
+  output$vehicles_summary_out <- renderDataTable({
+    as.data.frame(vehicles_group())
+  })
   
   # vehicles ---------------------------------------------------------------
   vehicles_active <- reactive({
@@ -8,8 +26,7 @@ function(input, output, session) {
     if (identical(input$active_vehicles, "active_vehicles_only")) {
       filter(holder, 
         delete_effective_date >= input$vehicle_date | 
-          is.na(delete_effective_date
-        )
+          is.na(delete_effective_date)
       )
     } else {
       holder
@@ -33,22 +50,9 @@ function(input, output, session) {
       )
     }
   })
-  
-  vehicles_group <- reactive({
-    # group by vin, member, or vehicle class
-    if (identical("member_num", input$group_by_vehicles)) {
-      group_by(vehicles_member(), member_num) %>%
-        summarise("Vehicles" = n())
-    } else if (identical("class", input$group_by_vehicles)) {
-      out <- group_by(vehicles_member(), class) %>%
-               summarise("Vehicles" = n())
-    } else {
-      vehicles_member() 
-    }
-  })
    
   vehicles_table <- reactive({  
-    as.data.frame(vehicles_group())
+    as.data.frame(vehicles_member())
   })
   
   output$vehicles_table_out <- renderDataTable({

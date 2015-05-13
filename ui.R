@@ -8,6 +8,7 @@ header <- dashboardHeader(
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
+    menuItem("Dashboard", tabName = "dashboard_tab", icon = icon("dashboard")),
     menuItem("Vehicles Table", tabName = "vehicles_tab", icon = icon("car")),
     menuItem("Add Vehicle", icon = icon("file-text"), tabName = "add_vehicle_tab"),
     menuItem("Rates", icon = icon("money"), tabName = "rates_tab")
@@ -16,10 +17,31 @@ sidebar <- dashboardSidebar(
 
 body <- dashboardBody(
   tabItems(
+  # Dashboard tab ----------------------------------------------
+    tabItem(tabName = "dashboard_tab",
+      fluidRow(
+        box(
+          width = 4,
+          radioButtons(
+            inputId = "group_by_vehicles",
+            label = "Group By:",
+            choices = list(
+              "Member" = "member_num",
+              "Vehicle Class" = "class"
+            )
+          )
+        ),
+        box(
+          width = 8,
+          dataTableOutput("vehicles_summary_out")
+        )
+      )
+      
+    ),
   # Vehicles tab -----------------------------------------------     
     tabItem(tabName = "vehicles_tab", 
       fluidRow(
-        box(width = 3,
+        box(width = 4,
           radioButtons(
             inputId = "active_vehicles", 
             label = NULL,  
@@ -37,7 +59,7 @@ body <- dashboardBody(
             )
           )
         ),
-        box(width = 3,
+        box(width = 4,
           selectizeInput(
             inputId = "member_vehicles",
             label = "Member",
@@ -46,19 +68,7 @@ body <- dashboardBody(
             selected = "All"
           )
         ),
-        box(
-          width = 3,
-          radioButtons(
-            inputId = "group_by_vehicles",
-            label = "Group By:",
-            choices = list(
-              "Vehicle" = "vin",
-              "Member" = "member_num",
-              "Vehicle Class" = "class"
-            )
-          )
-        ),
-        box(width = 3,
+        box(width = 4,
             downloadButton("download_vehicles", label = "Download Table")
         ),
         box(width = 12,  
@@ -109,8 +119,31 @@ body <- dashboardBody(
     ),
   # ---- Rates tab ---------------------------------------------------------
     tabItem(
-      tabName = "rates_tab"
-      
+      tabName = "rates_tab",
+      fluidRow(
+        box(
+          h1("Individual Vehicle Pricing/Rate Structure"),
+          width = 12,
+          DiagrammeR::grViz("
+          digraph rmarkdown {
+          Vehicle -> Liability
+          Vehicle -> Medical
+          Vehicle -> UM
+          Vehicle -> APD
+          Liability -> LiabilityDeductible
+          Medical -> MedicalDeductible
+          UM -> UMDeductible
+          APD -> APDDeductible
+          LiabilityDeductible -> EMod
+          MedicalDeductible -> EMod
+          UMDeductible -> EMod
+          APDDeductible -> EMod
+          EMod -> ScheduleMod
+          ScheduleMod -> VehiclePricing
+          }
+          ", height = 800)
+        )
+      )
     )
   )
 )
