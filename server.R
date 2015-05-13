@@ -21,9 +21,15 @@ function(input, output, session) {
     if ("All" %in% input$member_vehicles) {
       # don't do anythingo
       vehicles_active()
-    } else {
+    } else if (length(input$member_vehicles) == 0) {
+      NULL
+    } else if (length(input$member_vehicles) == 1){
+      filter(vehicles_active(),
+        member_num == input$member_vehicles
+      )
+    } else  {
       filter(vehicles_active(), 
-        member_num %in% input$member_vehicles # not working. works for 1 member with ==
+        member_num %in% input$member_vehicles # does not work for 1 member?
       )
     }
   })
