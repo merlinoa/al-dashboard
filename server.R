@@ -69,8 +69,8 @@ function(input, output, session) {
   
   #------------------Request Form-------------------------------------
   
-  observe({
-    input$submit_request
+  observeEvent(
+    input$submit_request,
     isolate({
       request_sql <- paste0(
                        "INSERT INTO vehicles VALUES(",
@@ -85,7 +85,7 @@ function(input, output, session) {
       dbGetQuery(conn = al_db$con,
                  statement = request_sql)
     })
-  })
+  )
   
   
   #---------------------Rates-----------------------------------------
