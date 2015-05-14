@@ -141,7 +141,7 @@ body <- dashboardBody(
           EMod -> ScheduleMod
           ScheduleMod -> VehiclePricing
           }
-          ", height = 800)
+          ", height = 700)
         )
       )
     )
