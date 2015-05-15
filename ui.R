@@ -20,8 +20,9 @@ body <- dashboardBody(
   # Dashboard tab ----------------------------------------------
     tabItem(tabName = "dashboard_tab",
       fluidRow(
+        valueBoxOutput("vehicles_total", width = 4),
         box(
-          width = 4,
+          width = 8,
           radioButtons(
             inputId = "group_by_vehicles",
             label = "Group By:",
@@ -29,10 +30,7 @@ body <- dashboardBody(
               "Member" = "member_num",
               "Vehicle Class" = "class"
             )
-          )
-        ),
-        box(
-          width = 8,
+          ),
           dataTableOutput("vehicles_summary_out")
         )
       )

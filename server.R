@@ -20,6 +20,15 @@ function(input, output, session) {
     as.data.frame(vehicles_group())
   })
   
+  output$vehicles_total <- renderValueBox({
+    vehicles <- as.data.frame(vehicles_group())
+    total_vehicles <- sum(vehicles$Vehicles)
+    valueBox(
+      value = total_vehicles,
+      subtitle = "In Force Vehicles",
+      icon = icon("car")
+    )
+  })
   # vehicles ---------------------------------------------------------------
   vehicles_active <- reactive({
     # subset by active vehicles
