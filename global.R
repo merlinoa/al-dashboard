@@ -4,9 +4,9 @@ library(RPostgreSQL)
 # connect to database
 al_db <- src_postgres(
            dbname = "al_db",
-           host = "ractuary-db.carngedsdgcf.us-west-2.rds.amazonaws.com",
+           host = "",
            port = 5432,
-           user = "merlinoa",
+           user = "",
            password = "",
            options = "-c search_path=al_db"
          )

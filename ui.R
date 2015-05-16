@@ -20,6 +20,11 @@ body <- dashboardBody(
   # Dashboard tab ----------------------------------------------
     tabItem(tabName = "dashboard_tab",
       fluidRow(
+        box(
+          p("Disclaimer: This dashboard is only meant as an example, and it is incomplete.")
+        )
+      ),
+      fluidRow(
         valueBoxOutput("vehicles_total", width = 4),
         box(
           width = 8,
