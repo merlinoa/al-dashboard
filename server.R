@@ -1,5 +1,6 @@
 ## server.R ##
 library(DiagrammeR)
+library(DT)
 
 function(input, output, session) {
   # dashboard --------------------------------------------------------------
@@ -16,7 +17,7 @@ function(input, output, session) {
     out
   })
   
-  output$vehicles_summary_out <- renderDataTable({
+  output$vehicles_summary_out <- DT::renderDataTable({
     as.data.frame(vehicles_group())
   })
   
@@ -64,7 +65,7 @@ function(input, output, session) {
     as.data.frame(vehicles_member())
   })
   
-  output$vehicles_table_out <- renderDataTable({
+  output$vehicles_table_out <- DT::renderDataTable({
     vehicles_table()
   })
   

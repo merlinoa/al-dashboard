@@ -36,7 +36,7 @@ body <- dashboardBody(
               "Vehicle Class" = "class"
             )
           ),
-          dataTableOutput("vehicles_summary_out")
+          DT::dataTableOutput("vehicles_summary_out")
         )
       )
       
@@ -75,7 +75,7 @@ body <- dashboardBody(
             downloadButton("download_vehicles", label = "Download Table")
         ),
         box(width = 12,  
-          dataTableOutput("vehicles_table_out")
+          DT::dataTableOutput("vehicles_table_out")
         )
       )
     ),
